@@ -57,17 +57,36 @@ func main() {
 		return
 	}
 
+	err = process.MergePreviousProposalIDs("previous_ids.csv", proposals)
+	if err != nil {
+		fmt.Printf("Error merging previous IDs: %v\n", err)
+		return
+	}
+
+	process.MergePreviousFunds(proposals)
+
 	// 3. (Optional) Process or allocate ATOM
 	process.AllocateToVenues(proposals)
 
-	// 4. Export to CSV or do further analysis
-	// process.ExportProposalsToCSV(proposals, "proposals.csv")
+	// 4. Print results
+	for _, p := range proposals {
+		fmt.Printf("Proposal %d: allocated=%.2f, previousFunds=%d\n",
+			p.ProposalID, p.AllocatedAtoms, p.PreviousFunds)
+	}
 
 	for _, p := range proposals {
 		fmt.Printf("Proposal %d: %s received %s percent of votes and receives %f ATOM\n", p.ProposalID, p.Title, p.Percentage, p.AllocatedAtoms)
 		for _, v := range p.DeploymentVenues {
 			fmt.Printf("  Venue %s: %f ATOM\n", v.ContractAddress, v.VenueAllocatedAtoms)
 		}
-		fmt.Println("\n")
+
+		// sum up the allocated atoms for each venue and subtract the previous funds from that number
+		var totalAllocated float64
+		for _, v := range p.DeploymentVenues {
+			totalAllocated += v.VenueAllocatedAtoms
+		}
+		totalAllocated -= float64(p.PreviousFunds)
+		fmt.Printf("  Allocated delta to previous round: %f ATOM\n", totalAllocated)
+		fmt.Println()
 	}
 }

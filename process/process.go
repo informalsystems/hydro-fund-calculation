@@ -52,6 +52,11 @@ func AllocateToVenues(proposals []types.Proposal) {
 			}
 			proposals[i].DeploymentVenues[j].VenueLimit = limit
 			proposals[i].DeploymentVenues[j].VenueAllocatedAtoms = 0
+
+			// if the limit would be less than 10,000 and the venue is bootstrap eligible, set it to 10,000
+			if limit < 10000 && v.BootstrapEligible {
+				proposals[i].DeploymentVenues[j].VenueLimit = 10000
+			}
 		}
 
 		// (B) Convert each venue’s "percentage" field into a numeric weight

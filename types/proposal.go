@@ -12,7 +12,12 @@ type Proposal struct {
 	Power                       string `json:"power"`
 	AllocatedAtoms              float64
 
+	// if this proposal was also in the previous round, this will be the id the proposal had before.
+	PreviousProposalID *uint64 `json:"previous_proposal_id"`
+
 	DeploymentVenues []DeploymentVenue `json:"deployment_locations"`
+
+	PreviousFunds uint64 `json:"previous_funds"`
 }
 
 type DeploymentVenue struct {
