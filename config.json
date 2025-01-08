@@ -1,0 +1,9 @@
+{
+    "totalATOM": 300000.0,
+    "venueFractions": {
+      "dex": 0.33333333333333,
+      "lending": 0.50
+    },
+    "contractAddress": "neutron13w6sagl4clacx4c8drhuwfl20cesn3pnllhf37e65ls8zwf6gcgq93t2lp",
+    "lcdURL": "https://rest-kralum.neutron-1.neutron.org"
+  }
