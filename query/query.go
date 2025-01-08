@@ -79,7 +79,7 @@ func QueryTopNProposals(numberOfProposals, roundID, trancheID uint64) ([]types.P
 // from both round_proposals and top_n_proposals.
 func QueryContract() ([]types.Proposal, error) {
 	// 1. Query the "round_proposals"
-	roundProposals, err := QueryRoundProposals(1, 1, 0, 100)
+	roundProposals, err := QueryRoundProposals(config.GlobalConfig.RoundID, 1, 0, 100)
 	if err != nil {
 		return nil, fmt.Errorf("failed to query round proposals: %w", err)
 	}
