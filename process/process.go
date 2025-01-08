@@ -14,22 +14,14 @@ func AllocateToVenues(proposals []types.Proposal) {
 	//-----------------------------------------------------
 	// 1) PROPOSAL-LEVEL DISTRIBUTION
 	//-----------------------------------------------------
-	var totalPercentage float64
-	for _, p := range proposals {
-		perc, err := strconv.ParseFloat(p.Percentage, 64)
-		if err == nil {
-			totalPercentage += perc
-		}
-	}
-
 	// Allocate each proposal's share of the total 300,000
 	for i := range proposals {
 		perc, err := strconv.ParseFloat(proposals[i].Percentage, 64)
-		if err != nil || totalPercentage <= 0 {
+		if err != nil {
 			proposals[i].AllocatedAtoms = 0
 			continue
 		}
-		share := (perc / totalPercentage) * config.GlobalConfig.TotalATOM
+		share := perc / 100 * config.GlobalConfig.TotalATOM
 		proposals[i].AllocatedAtoms = share
 	}
 
