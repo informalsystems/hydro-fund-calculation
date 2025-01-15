@@ -40,8 +40,9 @@ func AllocateToVenues(proposals []types.Proposal) {
 			limit := 0.0
 			if f > 0 {
 				// formula: limit = f/(1-f)*existingTVL
-				limit = (f / (1 - f)) * v.ExistingTVL
+				limit = (f / (1 - f)) * (v.ExistingTVL - float64(p.PreviousFunds))
 			}
+
 			proposals[i].DeploymentVenues[j].VenueLimit = limit
 			proposals[i].DeploymentVenues[j].VenueAllocatedAtoms = 0
 
